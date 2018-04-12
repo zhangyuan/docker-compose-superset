@@ -35,13 +35,13 @@ RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
 	apt-get install -y \
 	apt-transport-https nodejs yarn
 
-RUN pip install psycopg2==2.6.1 redis==2.10.5 sqlalchemy
+RUN pip install psycopg2==2.6.1 redis==2.10.5
 
 RUN git clone https://github.com/apache/incubator-superset.git
 
 RUN cd incubator-superset && \
 	(cd superset/assets && yarn && yarn run build) && \
-	python setup.py install && cd ..
+	pip install -r requirements.txt && python setup.py install && cd ..
 
 VOLUME /home/superset \
        /etc/superset \
