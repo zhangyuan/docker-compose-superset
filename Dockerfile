@@ -57,4 +57,4 @@ COPY app.conf /etc/nginx/conf.d/
 
 ENTRYPOINT ["./entrypoint.sh"]
 
-CMD ["runserver", "-p", "8080"]
+CMD ["runserver", "-w", "3", "-s", "/var/run/superset.sock"]
