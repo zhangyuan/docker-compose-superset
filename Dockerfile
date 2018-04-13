@@ -33,7 +33,7 @@ RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
 	apt-get update && \
 	apt remove -y cmdtest && \
 	apt-get install -y \
-	apt-transport-https nodejs yarn
+	apt-transport-https nodejs yarn nginx
 
 RUN pip install psycopg2==2.6.1 redis==2.10.5
 
@@ -51,7 +51,12 @@ WORKDIR /home/superset
 
 EXPOSE 8088
 HEALTHCHECK CMD ["curl", "-f", "http://localhost:8088/health"]
-ENTRYPOINT ["superset"]
-CMD ["runserver"]
+
+COPY entrypoint.sh /home/superset
+COPY app.conf /etc/nginx/conf.d/
+
+ENTRYPOINT ["./entrypoint.sh"]
+
+CMD ["runserver", "-p", "8080"]
 
 USER superset
