@@ -58,5 +58,3 @@ COPY app.conf /etc/nginx/conf.d/
 ENTRYPOINT ["./entrypoint.sh"]
 
 CMD ["runserver", "-p", "8080"]
-
-USER superset
